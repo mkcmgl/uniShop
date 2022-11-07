@@ -1,10 +1,4 @@
-// pages/message/index.js
-import {
-  createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-  store
-} from '../../store/store'
+// pkgB/pages/apple/apple.js
 Page({
 
   /**
@@ -13,19 +7,12 @@ Page({
   data: {
 
   },
-  btnHandler(e) {
-    this.updateA(e.target.dataset.val)
-  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.storeBindings = createStoreBindings(this, {
-      store,
-      fields: ['A', 'B', 'sum'],
-      actions: ['updateA', 'updateB']
-    })
+
   },
 
   /**
@@ -53,7 +40,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    this.storeBindings.detroyStoreBindings()
+
   },
 
   /**

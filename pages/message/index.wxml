@@ -5,3 +5,8 @@
 
 <van-button type='primary' bindtap="btnHandler" data-val='{{1}}'>A+1</van-button>
 <van-button type='danger' bindtap="btnHandler" data-val='{{-1}}'>A-1</van-button>
+
+<view>
+  ~~~~
+</view>
+<my-numbers></my-numbers>
