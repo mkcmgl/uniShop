@@ -1,3 +1,0 @@
-<!--pages/home/index.wxml-->
-<text>最爱牟科璀</text>
-<van-button type="primary" bindtap="getInfo">按键</van-button>
