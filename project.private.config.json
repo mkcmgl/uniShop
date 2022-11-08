@@ -4,5 +4,18 @@
   "setting": {
     "compileHotReLoad": true
   },
-  "libVersion": "2.27.1"
+  "libVersion": "2.21.4",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "",
+          "pathName": "pages/message/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

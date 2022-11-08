@@ -37,6 +37,7 @@
     "backgroundColor": "#efefef"
     },
 "tabBar": {
+  "custom": true,
   "list": [{
     "pagePath": "pages/home/index",
     "text": "首页",
@@ -62,7 +63,9 @@
 
   "usingComponents": {
     "van-button": "@vant/weapp/button/index",
-    "my-numbers":"./components/numbers/numbers"
+    "my-numbers":"./components/numbers/numbers",
+    "van-tabbar": "@vant/weapp/tabbar/index",
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index"
   }
 
 }
