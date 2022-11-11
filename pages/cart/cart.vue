@@ -1,6 +1,9 @@
 <template>
 	<view>
-		cart
+		购物车
+		
+		
+		？
 	</view>
 </template>
 
