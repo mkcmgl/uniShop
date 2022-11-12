@@ -7,7 +7,7 @@
 					<img :src="item.image" >
 				</view>
 			</swiper-item>
-？
+？ latst one day
 		</swiper>
 		
 		
