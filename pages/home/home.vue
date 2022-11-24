@@ -7,7 +7,7 @@
 					<img :src="item.image" >
 				</view>
 			</swiper-item>
-？ latst one day
+？ latst one day with out
 		</swiper>
 		
 		<view class="nav-list">
