@@ -10,7 +10,8 @@
 		</swiper>
 		
 		<view class="nav-list">
-		  <view class="nav-item" v-for="(item, i) in navList" :key="i" @click="navClickHandler(item)">
+		  <view class="nav-item" v-for="(item, i) in navList" :key="i"
+		   @click="navClickHandler(item)">
 		    <image :src="item.image_src" class="nav-img"></image>
 		  </view>
 		</view>
@@ -26,12 +27,15 @@
 		    <view class="floor-img-box">
 		      <!-- 左侧大图片的盒子 -->
 		      <navigator class="left-img-box" :url="item.product_list[0].url">
-		        <image :src="item.product_list[0].image_src" :style="{width: item.product_list[0].image_width + 'rpx'}" mode="widthFix"></image>
+		        <image :src="item.product_list[0].image_src" 
+				:style="{width: item.product_list[0].image_width + 'rpx'}" mode="widthFix"></image>
 		      </navigator>
 		      <!-- 右侧 4 个小图片的盒子 -->
 		      <view class="right-img-box">
-		        <navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" v-if="i2 !== 0" :url="item2.url">
-		          <image :src="item2.image_src" :style="{width: item2.image_width + 'rpx'}" mode="widthFix"></image>
+		        <navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2"
+				 v-if="i2 !== 0" :url="item2.url">
+		          <image :src="item2.image_src" :style="{width: item2.image_width + 'rpx'}"
+				   mode="widthFix"></image>
 		        </navigator>
 		      </view>
 		    </view>
@@ -86,7 +90,7 @@
 			},
 			// 获取首页楼层数据的方法
 			async getFloorList() {
-			  const { data: res } = await uni.$http.get('/floordata')
+			  const { data: res } = await uni.$http.get('/api/public/v1/home/floordata')
 			  if (res.meta.status !== 200) return uni.$showMsg()
 			
 			  // 对数据进行处理
@@ -113,6 +117,32 @@ swiper{
 		width: 100%;
 		height: 100%;
 	}
+	
 }
-
+.nav-list{
+		display: flex;
+		justify-content: space-around;
+		margin: 15px 0;
+		.nav-img{
+			width: 128rpx;
+			height: 140rpx;
+		}
+	}
+	.floor-list{
+		height: 60rpx;
+		width: 100%;
+		.floor-img-box{
+			display: flex;
+			padding-left: 10px;
+		}
+		.right-img-box{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+		.floor-title{
+			width: 100%;
+			height: 60rpx;
+		}
+	}
 </style>
