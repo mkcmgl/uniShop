@@ -59,7 +59,6 @@
 		},
 		methods:{
 		async gitSwiperList(){
-			console.log('????????????')
 			const res=await	uni.$http.get('/api/public/v1/home/swiperdata')
 			console.log(res)
 			if(res.statusCode !==200){
@@ -73,7 +72,7 @@
 				console.log(this.imgList)
 			},
 			async getNavList() {
-			  const { data: res } = await uni.$http.get('/catitems')
+			  const { data: res } = await uni.$http.get('/api/public/v1/home/catitems')
 			  console.log(res)
 			  if (res.meta.status !== 200) return uni.$showMsg()
 			  this.navList = res.message
