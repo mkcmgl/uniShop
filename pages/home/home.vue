@@ -3,11 +3,10 @@
 		<!-- 轮播图 -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 			<swiper-item  v-for="(item,index) in imgList" :key="item.id">
-				<view class="swiper-item">
-					<img :src="item.image" >
-				</view>
+				<navigator class="swiper-item" :url="'/subpkg/goods_detail/goods_detail?goods_id='+item.goods_id">
+					<img :src="item.image_src" >
+				</navigator>
 			</swiper-item>
-？ latst one day with out
 		</swiper>
 		
 		<view class="nav-list">
@@ -42,7 +41,7 @@
 </template>
 
 <script>
-	 import badgeMix from '@/mixins/tabbar-badge.js'
+	 // import badgeMix from '@/mixins/tabbar-badge.js'
 	export default {
 		data() {
 			return {
@@ -61,7 +60,7 @@
 		methods:{
 		async gitSwiperList(){
 			console.log('????????????')
-			const res=await	uni.$http.get('/slides')
+			const res=await	uni.$http.get('/api/public/v1/home/swiperdata')
 			console.log(res)
 			if(res.statusCode !==200){
 				return uni.showToast({
@@ -70,10 +69,12 @@
 					icon:'none'
 				})
 			}
-				this.imgList=res.data
+				this.imgList=res.data.message
+				console.log(this.imgList)
 			},
 			async getNavList() {
 			  const { data: res } = await uni.$http.get('/catitems')
+			  console.log(res)
 			  if (res.meta.status !== 200) return uni.$showMsg()
 			  this.navList = res.message
 			},
