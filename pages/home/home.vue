@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<view class="search-box">
+			<my-search  @click='goToSearch' ></my-search>
+		</view>
 		<!-- 轮播图 -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
 			<swiper-item  v-for="(item,index) in imgList" :key="item.id">
@@ -101,7 +104,7 @@
 			  })
 			  this.floorList = res.message
 			},
-			gotoSearch() {
+			goToSearch() {
 			  uni.navigateTo({
 			    url: '/subpkg/search/search'
 			  })
@@ -144,5 +147,10 @@ swiper{
 			width: 100%;
 			height: 60rpx;
 		}
+	}
+	.search-box{
+		position: sticky;
+		top:0;
+		z-index: 999999999;
 	}
 </style>
