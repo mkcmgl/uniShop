@@ -37,10 +37,21 @@
 <script>
 	import {
 		mapState,
-		mapMutations
+		mapMutations,
+		mapGetters
 	} from 'vuex'
 	export default {
-	
+		computed:{
+			...mapGetters('m_cart',['total'])
+		},
+		watch:{
+			total(newVal){
+				const findResult=this.options.find(x=>x.text==='购物车')
+				if(findResult){
+					findResult.info=newVal
+				}
+			}
+		},
 		data() {
 			return {
 				goods_info: {},
@@ -52,7 +63,7 @@
 				}, {
 					icon: 'cart',
 					text: '购物车',
-					info: 2
+					info: 0
 				}],
 				buttonGroup: [{
 						text: '加入购物车',

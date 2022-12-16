@@ -15,5 +15,11 @@ export default {
 			 console.log('xx',state.cart,findResult)
 		 }
 	 },
-	 getters:{}
+	 getters:{
+		 total(state){
+			 let c=0
+			 state.cart.forEach(x=>c+=x.goods_count)
+			 return c
+		 }
+	 }
 }
