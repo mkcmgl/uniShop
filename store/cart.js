@@ -1,7 +1,7 @@
 export default {
 	 namespaced:true,
 	 state:()=>({
-		 cart:[]
+		 cart:JSON.parse(uni.getStorageSync('cart')||'[]')
 	 }),
 	 mutations:{
 		 addToCart(state,goods){
@@ -12,7 +12,22 @@ export default {
 			 }else{
 				 findResult.goods_count++
 			 }
-			 console.log('xx',state.cart,findResult)
+			this.commit('m_cart/saveToStorage')
+		 },
+		 saveToStorage(state){
+			 uni.setStorageSync('cart',JSON.stringify(state.cart))
+		 },
+		 updateGoodsState(state, goods) {
+		   // 根据 goods_id 查询购物车中对应商品的信息对象
+		   const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
+		 
+		   // 有对应的商品信息对象
+		   if (findResult) {
+		     // 更新对应商品的勾选状态
+		     findResult.goods_state = goods.goods_state
+		     // 持久化存储到本地
+		     this.commit('m_cart/saveToStorage')
+		   }
 		 }
 	 },
 	 getters:{

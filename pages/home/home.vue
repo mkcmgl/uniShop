@@ -48,8 +48,10 @@
 </template>
 
 <script>
-	 // import badgeMix from '@/mixins/tabbar-badge.js'
+	 import badgeMix from '@/mixins/tabbar-badge.js'
 	export default {
+		
+		mixins: [badgeMix],
 		data() {
 			return {
 				imgList:{},

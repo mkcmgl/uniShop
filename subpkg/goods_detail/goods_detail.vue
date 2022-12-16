@@ -45,11 +45,14 @@
 			...mapGetters('m_cart',['total'])
 		},
 		watch:{
-			total(newVal){
-				const findResult=this.options.find(x=>x.text==='购物车')
-				if(findResult){
-					findResult.info=newVal
-				}
+			total:{
+				handler(newVal){
+					const findResult=this.options.find(x=>x.text==='购物车')
+					if(findResult){
+						findResult.info=newVal
+					}
+				},
+				immediate:true
 			}
 		},
 		data() {
