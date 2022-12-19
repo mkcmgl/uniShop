@@ -69,7 +69,6 @@
 		methods:{
 		async gitSwiperList(){
 			const res=await	uni.$http.get('/api/public/v1/home/swiperdata')
-			console.log(res)
 			if(res.statusCode !==200){
 				return uni.showToast({
 					title:'数据请求失败',
@@ -78,7 +77,6 @@
 				})
 			}
 				this.imgList=res.data.message
-				console.log(this.imgList)
 			},
 			async getNavList() {
 			  const { data: res } = await uni.$http.get('/api/public/v1/home/catitems')

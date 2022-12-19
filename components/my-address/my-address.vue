@@ -5,16 +5,16 @@
 			<button type="primary" size="mini" class="btnChooseAddress" @click="chooseAddress" >请选择收货地址+</button>
 		</view>
 		<!-- 渲染收货信息盒子 -->
-		<view class="address-info-box" v-else>
+		<view class="address-info-box" v-else @click="chooseAddress">
 			<view class="row1">
 				<view class="row1-left">
 					<view class="username">
-						收货人：ask
+						收货人：{{address.userName}}
 					</view>
 				</view>
 				<view class="row1-right">
 					<view class="phone">
-						电话：13883888192
+						电话：{{address.telNumber}}
 					</view>
 					<uni-icons type="right" size="16"></uni-icons>
 				</view>
@@ -24,7 +24,7 @@
 					收货地址：
 				</view>
 				<view class="row2-right">
-					重庆市九龙坡区重庆市九龙坡区重庆市九龙坡区重庆市九龙坡区重庆市九龙坡区重庆市九龙坡区
+					{{address.provinceName}}-{{address.cityName}}-{{address.countyName}}-{{address.detailInfo}}
 				</view>
 			</view>
 		</view>
@@ -34,18 +34,54 @@
 </template>
 
 <script>
+	import {mapMutations,mapState}from 'vuex'
 	export default {
 		name:"my-address",
 		data() {
 			return {
-				address:{}
 			};
 		},
 		methods:{
+			...mapMutations('m_user',['updateAddress']),
 			async chooseAddress(){
-				const res= await uni.chooseAddress()
-				console.log(res)
+		
+				const [err,succ]= await uni.chooseAddress().catch(err=>err)
+				console.log(succ)
+				if(succ  &&succ.errMsg==='chooseAddress:ok'){
+					console.log('succ')
+					this.updateAddress(succ)
+				}
+				if(err){
+					if(err.errMsg === 'chooseAddress:fail auth deny'|| err.errMsg === 'chooseAddress:fail authorize no response'){
+						// 重新授权
+							this.reAuth()
+					}
+				}
+					console.log(this.address,'add')
+			
+				
+			},
+			async reAuth(){
+			const [err2,confirmResult]=	await uni.showModal({
+					content:'检测到您没有打开地址权限，是否去设置打开',
+					confirmText:'确认',
+					cancelText:'取消',
+				})
+				if(err2) return err2
+				if(confirmResult.cancel)return uni.$showMsg('您取消了地址授权!')
+				if(confirmResult.confirm) return uni.openSetting({
+					success:(settingResult)=>{
+						 if (settingResult.authSetting['scope.address']) return uni.$showMsg('授权成功！请选择地址')
+						      //  地址授权的值等于 false，提示用户 “您取消了地址授权”
+						 if (!settingResult.authSetting['scope.address']) return uni.$showMsg('您取消了地址授权！')
+					}
+				})
 			}
+
+			
+		},
+		computed: {
+		...mapState('m_user',['address']),
 		}
 	}
 </script>
@@ -80,7 +116,6 @@
 	}
 	.row2{
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
 		margin-top: 10px;
 		.row2-left{
