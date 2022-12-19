@@ -1,12 +1,20 @@
 <template>
 	<view>
+		<my-address></my-address>
 		<view class="cart-tittle">
 			<uni-icons type="shop" size="18"></uni-icons>
 			<text class="cart-tittle-text">购物车</text>
 		</view>
-		<block v-for="( item,i) in cart" :key="i">
-			<my-goods :showNum="true" :redio="true" :goods="item" @radio-change="radioChangeHandler"></my-goods>
-		</block>
+		<uni-swipe-action>
+			<block v-for="( item,i) in cart" :key="i">
+				<uni-swipe-action-item :right-options="options" @click="swipeActionClickHandler(item)">
+					<my-goods :showNum="true" :redio="true" :goods="item"
+					 @radio-change="radioChangeHandler" @num-change="numberChangeHandler">
+					 </my-goods>
+				</uni-swipe-action-item>
+			</block>
+		</uni-swipe-action>
+
 	</view>
 </template>
 
@@ -24,13 +32,26 @@
 		},
 		data() {
 			return {
-
+			 options:[
+					{
+						text: '删除',
+						style: {
+							backgroundColor: '#C00000'
+						}
+					}
+				  ]
 			};
 		},
 		methods: {
-			...mapMutations('m_cart',['updateGoodsState']),
+			...mapMutations('m_cart',['updateGoodsState','updateGoodsCount','removeGoodsById']),
 			radioChangeHandler(e) {
 			this.updateGoodsState(e)
+			},
+			numberChangeHandler(e){
+				this.updateGoodsCount(e)
+			},
+			swipeActionClickHandler(goods){
+				this.removeGoodsById(goods.goods_id)
 			}
 		}
 	}

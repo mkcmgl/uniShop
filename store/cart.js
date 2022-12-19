@@ -28,6 +28,18 @@ export default {
 		     // 持久化存储到本地
 		     this.commit('m_cart/saveToStorage')
 		   }
+		 },
+		 // 更新商品数量
+		 updateGoodsCount(state,goods){
+			 const findResult = state.cart.find(x=>x.goods_id===goods.goods_id)
+				if(findResult){
+					findResult.goods_count=goods.goods_count
+					 this.commit('m_cart/saveToStorage')
+				}
+		 },
+		 removeGoodsById(state,goods_id){
+			 state.cart=state.cart.filter(x=>x.goods_id!==goods_id)
+			  this.commit('m_cart/saveToStorage')
 		 }
 	 },
 	 getters:{

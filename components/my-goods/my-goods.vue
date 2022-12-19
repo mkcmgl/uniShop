@@ -13,7 +13,9 @@
 						<view class="goods-info-box">
 							<view class="goods-price">
 							￥{{goods.goods_price|tofixed}}</view>
-							<uni-number-box v-if="showNum" :min="1" :value="goods.goods_count"></uni-number-box>
+							<uni-number-box v-if="showNum"
+							 @change="numChangeHandler"
+							  :min="1" :value="goods.goods_count"></uni-number-box>
 						</view>
 						
 					</view>
@@ -55,6 +57,11 @@
 				      // 商品最新的勾选状态
 				      goods_state: !this.goods.goods_state
 				    })
+			},
+			numChangeHandler(val){
+				console.log(val)
+				this.$emit('num-change',{goods_id:this.goods.goods_id,
+				goods_count:+val})
 			}
 		}
 		
@@ -68,6 +75,8 @@
 		align-items: center;
 	}
 .goods-item {
+	width: 750rpx;
+	box-sizing: border-box;
   display: flex;
   padding: 10px 5px;
   border-bottom: 1px solid #f0f0f0;
