@@ -2,7 +2,7 @@
 	<view>
 		<!-- 选择收获地址按钮盒子 -->
 		<view class="adress-choose-box" v-if="JSON.stringify(address)==='{}'">
-			<button type="primary" size="mini" class="btnChooseAddress" >请选择收货地址+</button>
+			<button type="primary" size="mini" class="btnChooseAddress" @click="chooseAddress" >请选择收货地址+</button>
 		</view>
 		<!-- 渲染收货信息盒子 -->
 		<view class="address-info-box" v-else>
@@ -40,6 +40,12 @@
 			return {
 				address:{}
 			};
+		},
+		methods:{
+			async chooseAddress(){
+				const res= await uni.chooseAddress()
+				console.log(res)
+			}
 		}
 	}
 </script>
