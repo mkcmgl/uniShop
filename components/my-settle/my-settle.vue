@@ -4,16 +4,16 @@
 			<radio color="#c00000" :checked="isFullCheck" /><text>全选</text>
 		</label>
 		<view class="amount-box">
-			合计：<text class="amount">￥{{checkedGoodsAmount}}</text>
+			合计：<text class="amount" >￥{{checkedGoodsAmount}}</text>
 		</view>
-		<view class="btn-settle">
+		<view class="btn-settle" @click="settlement">
 			结算（{{checkedCount}}）
 		</view>
 	</view>
 </template>
 
 <script>
-	import {mapGetters,mapMutations} from 'vuex'
+	import {mapGetters,mapMutations,mapState} from 'vuex'
 	export default {
 		name:"my-settle",
 		data() {
@@ -23,6 +23,8 @@
 		},
 		computed:{
 			...mapGetters('m_cart',['checkedCount','total','checkedGoodsAmount']),
+			...mapGetters('m_user',['addstr']),
+			...mapState('m_user',['token']),
 			isFullCheck(){
 			return	this.checkedCount==this.total?true:false
 			}
@@ -31,6 +33,14 @@
 			...mapMutations('m_cart',['updataAllGoodsState']),
 			changeAllState(){
 				this.updataAllGoodsState(!this.isFullCheck)
+			},
+			settlement(){
+				 if (!this.checkedCount) return uni.$showMsg('请选择要结算的商品！')
+				   //  再判断用户是否选择了收货地址
+				   if (!this.addstr) return uni.$showMsg('请选择收货地址！')
+				 
+				   //  最后判断用户是否登录了
+				   if (!this.token) return uni.$showMsg('请先登录！')
 			}
 		}
 	}
