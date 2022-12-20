@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import {mapMutations} from "vuex"
+	import {mapMutations,mapState} from "vuex"
 	export default {
 		name:"my-login",
 		data() {
@@ -47,12 +47,26 @@
 				 this.updateToken(token.token)
 				  // 换取 token
 				  const {data:loginResult} = await uni.$http.post('/api/public/v1/users/wxlogin', query)
+				  this.navigateBack()
 				  // if (loginResult.meta.status !== 200) {
 					 //  console.log(loginResult)
 					 //  return uni.$showMsg('登录失败！')
 				  // }
 
+			},
+			navigateBack(){
+				if(this.redirectInfo&&this.redirectInfo.openType==='switchTab'){
+					uni.switchTab({
+						url:this.redirectInfo.from,
+						complete:()=>{
+							this.updateRedirectInfo(null)
+						}
+					})
+				}
 			}
+		},
+		computed:{
+			...mapState('m_user',['redirectInfo'])
 		}
 	}
 </script>
